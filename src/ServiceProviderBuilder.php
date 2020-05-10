@@ -6,8 +6,7 @@ use League\Container\ServiceProvider\ServiceProviderAggregateInterface;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 
 /**
- * Class ServiceProviderBuilder
- * @package Maiorano\ContainerConfig
+ * Class ServiceProviderBuilder.
  */
 final class ServiceProviderBuilder implements BuilderInterface
 {
@@ -18,6 +17,7 @@ final class ServiceProviderBuilder implements BuilderInterface
 
     /**
      * ServiceProviderBuilder constructor.
+     *
      * @param ServiceProviderAggregateInterface $serviceProviders
      */
     public function __construct(ServiceProviderAggregateInterface $serviceProviders)
@@ -27,6 +27,7 @@ final class ServiceProviderBuilder implements BuilderInterface
 
     /**
      * @param array $serviceProviders
+     *
      * @return ServiceProviderAggregateInterface
      */
     public function build(array $serviceProviders): ServiceProviderAggregateInterface
@@ -34,11 +35,13 @@ final class ServiceProviderBuilder implements BuilderInterface
         foreach ($serviceProviders as $serviceProvider) {
             $this->buildServiceProvider($serviceProvider);
         }
+
         return $this->serviceProviders;
     }
 
     /**
      * @param string|ServiceProviderInterface $serviceProvider
+     *
      * @return ServiceProviderAggregateInterface
      */
     public function buildServiceProvider($serviceProvider): ServiceProviderAggregateInterface

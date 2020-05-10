@@ -6,8 +6,7 @@ use League\Container\Inflector\InflectorAggregateInterface;
 use League\Container\Inflector\InflectorInterface;
 
 /**
- * Class InflectorBuilder
- * @package Maiorano\ContainerConfig
+ * Class InflectorBuilder.
  */
 final class InflectorBuilder implements BuilderInterface
 {
@@ -18,6 +17,7 @@ final class InflectorBuilder implements BuilderInterface
 
     /**
      * InflectorBuilder constructor.
+     *
      * @param InflectorAggregateInterface $inflectors
      */
     public function __construct(InflectorAggregateInterface $inflectors)
@@ -27,19 +27,22 @@ final class InflectorBuilder implements BuilderInterface
 
     /**
      * @param array $config
+     *
      * @return InflectorAggregateInterface
      */
     public function build(array $config): InflectorAggregateInterface
     {
         foreach ($config as $key => $value) {
-            $this->buildInflector((string)$key, $value);
+            $this->buildInflector((string) $key, $value);
         }
+
         return $this->inflectors;
     }
 
     /**
-     * @param string $key
+     * @param string                $key
      * @param string|array|callable $value
+     *
      * @return InflectorInterface
      */
     public function buildInflector(string $key, $value): InflectorInterface
@@ -53,26 +56,30 @@ final class InflectorBuilder implements BuilderInterface
             $this->resolveProperties($inflector, $value['properties'] ?? []);
             $this->resolveMethods($inflector, $value['methods'] ?? []);
         }
+
         return $inflector;
     }
 
     /**
      * @param mixed $value
+     *
      * @return callable|null
      */
     private function resolveCallback($value): ?callable
     {
         if (is_callable($value)) {
             return $value;
-        } else if (!is_array($value)) {
+        } elseif (!is_array($value)) {
             return null;
         }
+
         return $value['callback'] ?? null;
     }
 
     /**
      * @param InflectorInterface $inflector
-     * @param array $properties
+     * @param array              $properties
+     *
      * @return InflectorInterface
      */
     private function resolveProperties(InflectorInterface $inflector, array $properties): InflectorInterface
@@ -82,7 +89,8 @@ final class InflectorBuilder implements BuilderInterface
 
     /**
      * @param InflectorInterface $inflector
-     * @param array $methods
+     * @param array              $methods
+     *
      * @return InflectorInterface
      */
     private function resolveMethods(InflectorInterface $inflector, array $methods): InflectorInterface
