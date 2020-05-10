@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 /**
  * Class ContainerBuilder.
  */
-final class ContainerBuilder
+final class ContainerBuilder implements BuilderInterface
 {
     /**
      * @var BuilderInterface
