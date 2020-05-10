@@ -33,7 +33,7 @@ final class DefinitionBuilder implements BuilderInterface
     public function build(array $config): DefinitionAggregateInterface
     {
         foreach ($config as $key => $value) {
-            $this->buildDefinition((string) $key, $value);
+            $this->buildDefinition((string)$key, $value);
         }
 
         return $this->definitions;
@@ -41,20 +41,19 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return DefinitionInterface
      */
     public function buildDefinition(string $key, $value): DefinitionInterface
     {
-        if ($value instanceof DefinitionInterface) {
-            $alias = is_numeric($key) ? $value->getAlias() : $key;
-
-            return $this->definitions->add($alias, $value, $value->isShared());
-        }
-
         $concrete = $this->resolveConcrete($value);
         $alias = $this->resolveAlias($key, $value, $concrete);
+
+        if ($concrete instanceof DefinitionInterface) {
+            return $this->definitions->add($alias, $concrete, $concrete->isShared());
+        }
+
         $definition = $this->definitions->add($alias, $concrete, $this->resolveShared($value));
         if (is_array($value)) {
             $this->resolveArguments($definition, $value['arguments'] ?? []);
@@ -81,8 +80,8 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param string $key
-     * @param mixed  $value
-     * @param mixed  $concrete
+     * @param mixed $value
+     * @param mixed $concrete
      *
      * @return string
      */
@@ -106,6 +105,9 @@ final class DefinitionBuilder implements BuilderInterface
      */
     private function resolveAliasFromConcrete(string $key, $concrete): string
     {
+        if ($concrete instanceof DefinitionInterface) {
+            return $concrete->getAlias();
+        }
         if (is_string($concrete) && (class_exists($concrete) || interface_exists($concrete))) {
             return $concrete;
         }
@@ -129,7 +131,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array               $arguments
+     * @param array $arguments
      *
      * @return DefinitionInterface
      */
@@ -140,7 +142,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array               $methods
+     * @param array $methods
      *
      * @return DefinitionInterface
      */
@@ -151,7 +153,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array               $tags
+     * @param array $tags
      *
      * @return DefinitionInterface
      */

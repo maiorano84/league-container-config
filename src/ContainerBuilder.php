@@ -37,7 +37,8 @@ final class ContainerBuilder
         BuilderInterface $definitionBuilder,
         BuilderInterface $serviceProviderBuilder,
         BuilderInterface $inflectorBuilder
-    ) {
+    )
+    {
         $this->definitionBuilder = $definitionBuilder;
         $this->serviceProviderBuilder = $serviceProviderBuilder;
         $this->inflectorBuilder = $inflectorBuilder;
@@ -73,7 +74,7 @@ final class ContainerBuilder
 
     /**
      * @param Container $container
-     * @param array     $delegates
+     * @param array $delegates
      *
      * @return Container
      */

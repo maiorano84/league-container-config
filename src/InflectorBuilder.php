@@ -33,14 +33,14 @@ final class InflectorBuilder implements BuilderInterface
     public function build(array $config): InflectorAggregateInterface
     {
         foreach ($config as $key => $value) {
-            $this->buildInflector((string) $key, $value);
+            $this->buildInflector((string)$key, $value);
         }
 
         return $this->inflectors;
     }
 
     /**
-     * @param string                $key
+     * @param string $key
      * @param string|array|callable $value
      *
      * @return InflectorInterface
@@ -78,7 +78,7 @@ final class InflectorBuilder implements BuilderInterface
 
     /**
      * @param InflectorInterface $inflector
-     * @param array              $properties
+     * @param array $properties
      *
      * @return InflectorInterface
      */
@@ -89,7 +89,7 @@ final class InflectorBuilder implements BuilderInterface
 
     /**
      * @param InflectorInterface $inflector
-     * @param array              $methods
+     * @param array $methods
      *
      * @return InflectorInterface
      */
