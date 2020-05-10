@@ -33,7 +33,7 @@ final class DefinitionBuilder implements BuilderInterface
     public function build(array $config): DefinitionAggregateInterface
     {
         foreach ($config as $key => $value) {
-            $this->buildDefinition((string)$key, $value);
+            $this->buildDefinition((string) $key, $value);
         }
 
         return $this->definitions;
@@ -41,7 +41,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return DefinitionInterface
      */
@@ -80,8 +80,8 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param string $key
-     * @param mixed $value
-     * @param mixed $concrete
+     * @param mixed  $value
+     * @param mixed  $concrete
      *
      * @return string
      */
@@ -131,7 +131,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $arguments
+     * @param array               $arguments
      *
      * @return DefinitionInterface
      */
@@ -142,7 +142,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $methods
+     * @param array               $methods
      *
      * @return DefinitionInterface
      */
@@ -153,7 +153,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $tags
+     * @param array               $tags
      *
      * @return DefinitionInterface
      */
