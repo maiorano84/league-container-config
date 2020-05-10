@@ -53,9 +53,9 @@ final class DefinitionBuilder implements BuilderInterface
         $alias = $this->resolveAlias($key, $value, $concrete);
         $definition = $this->definitions->add($alias, $concrete, $this->resolveShared($value));
         if(is_array($value)) {
-            $this->resolveArguments($definition, (array)$value['arguments']);
-            $this->resolveMethods($definition, (array)$value['methods']);
-            $this->resolveTags($definition, (array)$value['tags']);
+            $this->resolveArguments($definition, $value['arguments'] ?? []);
+            $this->resolveMethods($definition, $value['methods'] ?? []);
+            $this->resolveTags($definition, $value['tags'] ?? []);
         }
         return $definition;
     }

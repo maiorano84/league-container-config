@@ -63,11 +63,11 @@ final class ContainerBuilder
     public function build(array $config): Container
     {
         $container = new Container(
-            $this->definitionBuilder->build((array)$config['definitions']),
-            $this->serviceProviderBuilder->build((array)$config['serviceProviders']),
-            $this->inflectorBuilder->build((array)$config['inflectors'])
+            $this->definitionBuilder->build($config['definitions'] ?? []),
+            $this->serviceProviderBuilder->build($config['serviceProviders'] ?? []),
+            $this->inflectorBuilder->build($config['inflectors'] ?? [])
         );
-        return $this->loadDelegates($container, (array)$config['delegates']);
+        return $this->loadDelegates($container, $config['delegates'] ?? []);
     }
 
     /**

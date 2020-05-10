@@ -50,8 +50,8 @@ final class InflectorBuilder implements BuilderInterface
             $inflector->invokeMethod($value, []);
         }
         if (is_array($value) && !is_callable($value)) {
-            $this->resolveProperties($inflector, (array)$value['properties']);
-            $this->resolveMethods($inflector, (array)$value['methods']);
+            $this->resolveProperties($inflector, $value['properties'] ?? []);
+            $this->resolveMethods($inflector, $value['methods'] ?? []);
         }
         return $inflector;
     }
