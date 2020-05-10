@@ -100,7 +100,8 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param string $key
-     * @param mixed $concrete
+     * @param mixed  $concrete
+     *
      * @return string
      */
     private function resolveAliasFromConcrete(string $key, $concrete): string
@@ -108,6 +109,7 @@ final class DefinitionBuilder implements BuilderInterface
         if (is_string($concrete) && (class_exists($concrete) || interface_exists($concrete))) {
             return $concrete;
         }
+
         return is_object($concrete) ? get_class($concrete) : $key;
     }
 
