@@ -9,8 +9,7 @@ use League\Container\ServiceProvider\ServiceProviderAggregate;
 use Psr\Container\ContainerInterface;
 
 /**
- * Class ContainerBuilder
- * @package Maiorano\ContainerConfig
+ * Class ContainerBuilder.
  */
 final class ContainerBuilder
 {
@@ -29,6 +28,7 @@ final class ContainerBuilder
 
     /**
      * ContainerBuilder constructor.
+     *
      * @param BuilderInterface $definitionBuilder
      * @param BuilderInterface $serviceProviderBuilder
      * @param BuilderInterface $inflectorBuilder
@@ -37,8 +37,7 @@ final class ContainerBuilder
         BuilderInterface $definitionBuilder,
         BuilderInterface $serviceProviderBuilder,
         BuilderInterface $inflectorBuilder
-    )
-    {
+    ) {
         $this->definitionBuilder = $definitionBuilder;
         $this->serviceProviderBuilder = $serviceProviderBuilder;
         $this->inflectorBuilder = $inflectorBuilder;
@@ -47,17 +46,18 @@ final class ContainerBuilder
     /**
      * @return ContainerBuilder
      */
-    public static function make(): ContainerBuilder
+    public static function make(): self
     {
         return new static(
-            new DefinitionBuilder(new DefinitionAggregate),
-            new ServiceProviderBuilder(new ServiceProviderAggregate),
-            new InflectorBuilder(new InflectorAggregate)
+            new DefinitionBuilder(new DefinitionAggregate()),
+            new ServiceProviderBuilder(new ServiceProviderAggregate()),
+            new InflectorBuilder(new InflectorAggregate())
         );
     }
 
     /**
      * @param array $config
+     *
      * @return Container
      */
     public function build(array $config): Container
@@ -67,12 +67,14 @@ final class ContainerBuilder
             $this->serviceProviderBuilder->build($config['serviceProviders'] ?? []),
             $this->inflectorBuilder->build($config['inflectors'] ?? [])
         );
+
         return $this->loadDelegates($container, $config['delegates'] ?? []);
     }
 
     /**
      * @param Container $container
-     * @param array $delegates
+     * @param array     $delegates
+     *
      * @return Container
      */
     public function loadDelegates(Container $container, array $delegates): Container
@@ -81,9 +83,10 @@ final class ContainerBuilder
             /**
              * @var ContainerInterface $instance
              */
-            $instance = $delegate instanceof ContainerInterface ? $delegate : new $delegate;
+            $instance = $delegate instanceof ContainerInterface ? $delegate : new $delegate();
             $container->delegate($instance);
         }
+
         return $container;
     }
 }

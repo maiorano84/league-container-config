@@ -108,12 +108,12 @@ class DefinitionBuilderTest extends TestCase
         $this->assertInstanceOf(
             DefinitionInterface::class,
             $this->builder->buildDefinition('alias', [
-                'alias' => 'actualAlias',
-                'concrete' => 'value',
-                'shared' => true,
+                'alias'     => 'actualAlias',
+                'concrete'  => 'value',
+                'shared'    => true,
                 'arguments' => ['arg1', 'arg2', 'arg3'],
-                'methods' => ['method' => ['arg1', 'arg2']],
-                'tags' => ['tag1', 'tag2', 'tag3']
+                'methods'   => ['method' => ['arg1', 'arg2']],
+                'tags'      => ['tag1', 'tag2', 'tag3'],
             ])
         );
     }
@@ -123,21 +123,22 @@ class DefinitionBuilderTest extends TestCase
         $concreteBuilder = new DefinitionBuilder(
             $this->createMock(DefinitionAggregateInterface::class)
         );
+
         return [
             [
                 'config' => [
-                    'alias' => 'value',
+                    'alias'  => 'value',
                     'alias2' => [],
                     'alias3' => [
-                        'alias' => 'alias4',
+                        'alias'    => 'alias4',
                         'concrete' => 'value',
-                        'shared' => true,
+                        'shared'   => true,
                     ],
                 ],
                 'expectedValues' => [
                     ['alias', 'value', false],
                     ['alias2', [], false],
-                    ['alias4', 'value', true]
+                    ['alias4', 'value', true],
                 ],
             ],
             [
@@ -145,15 +146,15 @@ class DefinitionBuilderTest extends TestCase
                     'value',
                     [],
                     [
-                        'alias' => 'alias4',
+                        'alias'    => 'alias4',
                         'concrete' => 'value',
-                        'shared' => true,
+                        'shared'   => true,
                     ],
                     DefinitionInterface::class,
                     $concreteBuilder,
                 ],
                 'expectedValues' => [
-                    ['0', 'value', false,],
+                    ['0', 'value', false],
                     ['1', [], false],
                     ['alias4', 'value', true],
                     [DefinitionInterface::class, DefinitionInterface::class, false],

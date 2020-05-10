@@ -6,8 +6,7 @@ use League\Container\Definition\DefinitionAggregateInterface;
 use League\Container\Definition\DefinitionInterface;
 
 /**
- * Class DefinitionBuilder
- * @package Maiorano\ContainerConfig
+ * Class DefinitionBuilder.
  */
 final class DefinitionBuilder implements BuilderInterface
 {
@@ -18,6 +17,7 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * DefinitionBuilder constructor.
+     *
      * @param DefinitionAggregateInterface $definitions
      */
     public function __construct(DefinitionAggregateInterface $definitions)
@@ -27,41 +27,47 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param array $config
+     *
      * @return DefinitionAggregateInterface
      */
     public function build(array $config): DefinitionAggregateInterface
     {
         foreach ($config as $key => $value) {
-            $this->buildDefinition((string)$key, $value);
+            $this->buildDefinition((string) $key, $value);
         }
+
         return $this->definitions;
     }
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return DefinitionInterface
      */
     public function buildDefinition(string $key, $value): DefinitionInterface
     {
         if ($value instanceof DefinitionInterface) {
             $alias = is_numeric($key) ? $value->getAlias() : $key;
+
             return $this->definitions->add($alias, $value, $value->isShared());
         }
 
         $concrete = $this->resolveConcrete($value);
         $alias = $this->resolveAlias($key, $value, $concrete);
         $definition = $this->definitions->add($alias, $concrete, $this->resolveShared($value));
-        if(is_array($value)) {
+        if (is_array($value)) {
             $this->resolveArguments($definition, $value['arguments'] ?? []);
             $this->resolveMethods($definition, $value['methods'] ?? []);
             $this->resolveTags($definition, $value['tags'] ?? []);
         }
+
         return $definition;
     }
 
     /**
      * @param mixed $value
+     *
      * @return array|mixed|string
      */
     private function resolveConcrete($value)
@@ -69,13 +75,15 @@ final class DefinitionBuilder implements BuilderInterface
         if (is_array($value) && isset($value['concrete'])) {
             return $value['concrete'];
         }
+
         return $value;
     }
 
     /**
      * @param string $key
-     * @param mixed $value
-     * @param mixed $concrete
+     * @param mixed  $value
+     * @param mixed  $concrete
+     *
      * @return string
      */
     private function resolveAlias(string $key, $value, $concrete): string
@@ -91,11 +99,13 @@ final class DefinitionBuilder implements BuilderInterface
                 return get_class($concrete);
             }
         }
+
         return $key;
     }
 
     /**
      * @param mixed $value
+     *
      * @return bool
      */
     private function resolveShared($value): bool
@@ -103,12 +113,14 @@ final class DefinitionBuilder implements BuilderInterface
         if (is_array($value) && isset($value['shared'])) {
             return $value['shared'] === true;
         }
+
         return false;
     }
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $arguments
+     * @param array               $arguments
+     *
      * @return DefinitionInterface
      */
     private function resolveArguments(DefinitionInterface $definition, array $arguments): DefinitionInterface
@@ -118,7 +130,8 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $methods
+     * @param array               $methods
+     *
      * @return DefinitionInterface
      */
     private function resolveMethods(DefinitionInterface $definition, array $methods): DefinitionInterface
@@ -128,7 +141,8 @@ final class DefinitionBuilder implements BuilderInterface
 
     /**
      * @param DefinitionInterface $definition
-     * @param array $tags
+     * @param array               $tags
+     *
      * @return DefinitionInterface
      */
     private function resolveTags(DefinitionInterface $definition, array $tags): DefinitionInterface
@@ -136,6 +150,7 @@ final class DefinitionBuilder implements BuilderInterface
         foreach ($tags as $tag) {
             $definition->addTag($tag);
         }
+
         return $definition;
     }
 }
