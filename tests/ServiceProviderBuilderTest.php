@@ -51,7 +51,7 @@ class ServiceProviderBuilderTest extends TestCase
             ServiceProviderAggregateInterface::class,
             $this->builder->build([
                 'ServiceProviderClass',
-                ServiceProviderInterface::class
+                ServiceProviderInterface::class,
             ])
         );
     }

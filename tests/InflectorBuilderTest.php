@@ -31,7 +31,6 @@ class InflectorBuilderTest extends TestCase
      */
     public function testBuildInflector($key, $value, $expectedCallback, $methods, $properties): void
     {
-
         $this->aggregate
             ->expects($this->once())
             ->method('add')
@@ -84,10 +83,10 @@ class InflectorBuilderTest extends TestCase
 
         $this->builder->build([
             'test' => [
-                'callback' => $cb,
-                'methods' => ['method' => 'args'],
-                'properties' => ['prop' => 'value']
-            ]
+                'callback'   => $cb,
+                'methods'    => ['method' => 'args'],
+                'properties' => ['prop' => 'value'],
+            ],
         ]);
     }
 
@@ -95,15 +94,16 @@ class InflectorBuilderTest extends TestCase
     {
         $closure = function () {
         };
+
         return [
             ['key', $closure, $closure, null, null],
             ['key', ['callback' => $closure], $closure, null, null],
             ['key', 'method', null, null, null],
             ['key', [
-                'callback' => $closure,
-                'methods' => ['method' => 'args'],
+                'callback'   => $closure,
+                'methods'    => ['method' => 'args'],
                 'properties' => ['prop' => 'val'],
-            ], $closure, ['method' => 'args'], ['prop' => 'val']]
+            ], $closure, ['method' => 'args'], ['prop' => 'val']],
         ];
     }
 }
