@@ -84,14 +84,22 @@ final class DefinitionBuilder implements BuilderInterface
             return $value['alias'];
         }
         if (is_numeric($key)) {
-            if (is_string($concrete) && (class_exists($concrete) || interface_exists($concrete))) {
-                return $concrete;
-            }
-            if (is_object($concrete)) {
-                return get_class($concrete);
-            }
+            return $this->resolveAliasFromConcrete($key, $concrete);
         }
         return $key;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $concrete
+     * @return string
+     */
+    private function resolveAliasFromConcrete(string $key, $concrete): string
+    {
+        if (is_string($concrete) && (class_exists($concrete) || interface_exists($concrete))) {
+            return $concrete;
+        }
+        return is_object($concrete) ? get_class($concrete) : $key;
     }
 
     /**
